@@ -5,6 +5,8 @@
 // board-state-context, promotion-dialog) was untestable. Only the handful of
 // APIs this library actually touches are implemented.
 
+import React from 'react';
+
 type Style = Record<string, unknown>;
 
 export const StyleSheet = {
@@ -37,11 +39,18 @@ export const Platform = {
   }): T | undefined => specifics.ios ?? specifics.default,
 };
 
-export const Image = {
+export const useWindowDimensions = () => Dimensions.get();
+
+// Usable both as a component (`<Image />`) and as the static-API namespace.
+const ImageComponent = (props: Record<string, unknown>) =>
+  React.createElement('Image', props);
+export const Image = Object.assign(ImageComponent, {
   resolveAssetSource: (source: unknown) =>
     typeof source === 'number' ? { uri: `asset://${source}` } : source,
-};
+});
 
 export const View = 'View';
 export const Text = 'Text';
 export const Pressable = 'Pressable';
+export const TouchableOpacity = 'TouchableOpacity';
+export const Modal = 'Modal';

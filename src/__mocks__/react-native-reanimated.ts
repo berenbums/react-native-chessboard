@@ -74,7 +74,19 @@ export const useAnimatedReaction = <T>(
   react(prepare(), null);
 };
 
+// Layout-animation builders: chainable no-ops that keep the real API shape.
+const createLayoutAnimation = () => {
+  const builder = {
+    duration: (_ms: number) => builder,
+    delay: (_ms: number) => builder,
+  };
+  return builder;
+};
+export const FadeIn = createLayoutAnimation();
+export const FadeOut = createLayoutAnimation();
+
 export default {
+  View: 'Animated.View',
   useAnimatedReaction,
   useSharedValue,
   makeMutable,
